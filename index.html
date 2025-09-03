@@ -41,7 +41,7 @@
 
         .btn { display: inline-block; background: var(--primary-gradient); color: #fff; padding: 0.8rem 2rem; border: none; border-radius: 50px; text-decoration: none; font-weight: 600; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.1); cursor: pointer; }
         .btn:hover { transform: translateY(-3px); box-shadow: 0 7px 20px rgba(106, 17, 203, 0.25); }
-        .btn-secondary { background: #fff; color: var(--text-primary); border: 1px solid var(--border-color); box-shadow: none; }
+        .btn-secondary { background: var(--card-bg); color: var(--text-primary); border: 1px solid var(--border-color); box-shadow: none; font-weight: 500;}
         .btn-secondary:hover { transform: translateY(-3px); border-color: var(--text-primary); box-shadow: var(--card-shadow); }
 
         /* --- HEADER --- */
@@ -66,6 +66,7 @@
         .hero { text-align: center; padding: 6rem 1rem 8rem 1rem; background: linear-gradient(180deg, var(--background-color) 70%, #fff 100%); }
         .hero h1 { font-size: 3.5rem; font-weight: 700; max-width: 800px; margin: 0 auto 1.5rem auto; line-height: 1.2; }
         .hero p { font-size: 1.25rem; color: var(--text-secondary); max-width: 650px; margin: 0 auto 2.5rem auto; }
+        .hero-buttons { display: flex; justify-content: center; align-items: center; gap: 1rem; flex-wrap: wrap; }
 
         /* --- AI TOOLS SECTION --- */
         #tools { background-color: #fff; border-radius: 20px; padding: 5rem; box-shadow: 0 20px 40px rgba(0,0,0,0.05); }
@@ -92,6 +93,15 @@
         .pathway-footer { display: flex; justify-content: space-between; align-items: center; }
         .btn-pathway { background: none; border: 1px solid var(--primary-color-end); color: var(--primary-color-end); font-weight: 600; padding: 0.6rem 1.2rem; border-radius: 50px; text-decoration: none; transition: all 0.3s ease; }
         .btn-pathway:hover { background: var(--primary-color-end); color: #fff; }
+        
+        /* --- FAQ SECTION --- */
+        .faq-container { max-width: 768px; margin: 0 auto; }
+        .faq-item { background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; margin-bottom: 1rem; overflow: hidden; }
+        .faq-question { width: 100%; background: none; border: none; text-align: left; padding: 1.5rem; font-size: 1.1rem; font-weight: 600; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+        .faq-question::after { content: '+'; font-size: 1.5rem; color: var(--primary-color-end); transition: transform 0.3s ease; }
+        .faq-item.active .faq-question::after { transform: rotate(45deg); }
+        .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out; }
+        .faq-answer p { padding: 0 1.5rem 1.5rem; color: var(--text-secondary); }
 
         /* --- FOOTER --- */
         footer { text-align: center; padding: 3rem 0; margin-top: 4rem; border-top: 1px solid var(--border-color); color: var(--text-secondary); }
@@ -106,8 +116,6 @@
         .close-modal { background: none; border: none; font-size: 2rem; color: #999; cursor: pointer; line-height: 1; }
         .modal-body p { margin-bottom: 2rem; color: var(--text-secondary); }
         .modal-footer { display: flex; gap: 1rem; justify-content: flex-end; }
-        
-        /* Feedback Form Styles */
         .form-group { margin-bottom: 1.5rem; }
         .form-group label { display: block; font-weight: 600; margin-bottom: 0.5rem; }
         .star-rating { display: flex; flex-direction: row-reverse; justify-content: flex-end; }
@@ -129,7 +137,6 @@
     </style>
 </head>
 <body>
-    <!-- *** HEADER UPDATED HERE *** -->
     <header class="main-header">
         <div class="container">
             <a href="index.html" class="logo">Innovate<span>Sphere</span></a>
@@ -157,7 +164,12 @@
             <div class="container">
                 <h1>Unlock Your Potential with Generative AI</h1>
                 <p>Welcome to InnovateSphere, your central hub for the tools, training, and insights you need to lead in the age of AI.</p>
-                <a href="#tools" class="btn">Explore AI Toolkit</a>
+                <!-- *** UPDATED HERO BUTTONS *** -->
+                <div class="hero-buttons">
+                    <a href="gamification.html" class="btn btn-secondary">View Leaderboard</a>
+                    <a href="#tools" class="btn">Explore AI Toolkit</a>
+                    <a href="#pathways" class="btn btn-secondary">Watch Demos</a>
+                </div>
             </div>
         </section>
 
@@ -168,8 +180,7 @@
                     <p>A suite of powerful, internally-approved AI applications to enhance your creativity and productivity.</p>
                 </div>
                 <div class="tools-grid">
-                    <!-- Cards remain the same -->
-                    <!-- Tool 1 -->
+                    <!-- Tool cards remain the same -->
                     <div class="tool-card" data-title="Aurora" data-tag="Marketing" data-long-desc="Aurora is the ultimate text-to-image generator. Create stunning visuals, product mockups, and artistic pieces from a simple text description. Perfect for marketing, design, and creative teams.">
                         <div class="tool-header">
                             <div class="tool-icon"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" /></svg></div>
@@ -178,7 +189,6 @@
                         <p class="description">Create stunning visuals, product mockups, and artistic pieces from a simple text description.</p>
                         <div class="tool-footer"><div class="tag">Marketing</div><span>Last used: 2h ago</span></div>
                     </div>
-                    <!-- Tool 2 -->
                     <div class="tool-card" data-title="Cogito" data-tag="Productivity" data-long-desc="Your smart writing assistant. Draft emails, write reports, summarize long documents, and brainstorm ideas in seconds. Cogito helps you communicate more effectively and efficiently.">
                          <div class="tool-header">
                             <div class="tool-icon"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" /></svg></div>
@@ -187,7 +197,6 @@
                         <p class="description">Draft emails, write reports, and summarize long documents to communicate more effectively.</p>
                          <div class="tool-footer"><div class="tag">Productivity</div><span>Last used: Yesterday</span></div>
                     </div>
-                     <!-- Tool 3 -->
                     <div class="tool-card" data-title="Synapse" data-tag="Engineering" data-long-desc="Generate, explain, and debug code with our powerful AI assistant. Supports dozens of languages and integrates with your favorite IDEs to accelerate your development workflow.">
                          <div class="tool-header">
                             <div class="tool-icon"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5" /></svg></div>
@@ -196,7 +205,6 @@
                         <p class="description">Generate, explain, and debug code to accelerate your development workflow.</p>
                          <div class="tool-footer"><div class="tag">Engineering</div><span>Last used: 5d ago</span></div>
                     </div>
-                    <!-- Tool 4 -->
                     <div class="tool-card" data-title="Harmony" data-tag="Creative" data-long-desc="AI-powered music and sound effect generation. Create custom, royalty-free soundtracks for videos, presentations, and podcasts without any musical experience required.">
                         <div class="tool-header">
                            <div class="tool-icon"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 9l10.5-3m0 6.553v3.75a2.25 2.25 0 01-1.632 2.163l-1.32.377a1.803 1.803 0 11-.99-3.467l2.31-.66a2.25 2.25 0 001.632-2.163zm0 0V7.5A2.25 2.25 0 006.75 5.25v1.5" /></svg></div>
@@ -205,7 +213,6 @@
                        <p class="description">Create custom, royalty-free soundtracks and sound effects for videos and presentations.</p>
                         <div class="tool-footer"><div class="tag">Creative</div><span>Last used: 1w ago</span></div>
                    </div>
-                   <!-- Tool 5 -->
                    <div class="tool-card" data-title="Oracle" data-tag="Analytics" data-long-desc="Turn your raw data into actionable insights. Oracle analyzes spreadsheets, identifies trends, and generates clear, concise reports and visualizations to inform your business strategy.">
                        <div class="tool-header">
                           <div class="tool-icon"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M7.5 14.25v2.25m3-4.5v4.5m3-6.75v6.75m3-9v9M6 20.25h12A2.25 2.25 0 0020.25 18V6A2.25 2.25 0 0018 3.75H6A2.25 2.25 0 003.75 6v12A2.25 2.25 0 006 20.25z" /></svg></div>
@@ -214,10 +221,9 @@
                       <p class="description">Analyze spreadsheets, identify trends, and generate reports and visualizations from raw data.</p>
                        <div class="tool-footer"><div class="tag">Analytics</div><span>Last used: 3d ago</span></div>
                   </div>
-                  <!-- Tool 6 -->
                   <div class="tool-card" data-title="Odyssey" data-tag="Strategy" data-long-desc="Your AI partner for strategic planning. Odyssey helps you craft detailed project plans, map out marketing campaigns, and create compelling presentation slides in a fraction of the time.">
                       <div class="tool-header">
-                         <div class="tool-icon"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.59 14.37a6 6 0 01-5.84 7.38v-4.82m5.84-2.56v4.82a6 6 0 01-1.844 4.24l-1.253 1.253a4.5 4.5 0 01-6.364-6.364l1.253-1.253a4.5 4.5 0 014.24-1.844m-2.56-5.84v4.82a6 6 0 017.38 5.84m-12.24 0H4.5a4.5 4.5 0 01-4.5-4.5v-1.253a4.5 4.5 0 011.844-4.24l1.253-1.253a4.5 4.5 0 016.364 0l1.253 1.253a4.5 4.5 0 011.844 4.24v1.253a4.5 4.5 0 01-4.5 4.5h-1.253m-2.56-5.84v-4.82a6 6 0 01-5.84-7.38m12.24 0H19.5a4.5 4.5 0 014.5 4.5v1.253a4.5 4.5 0 01-1.844-4.24l-1.253 1.253a4.5 4.5 0 01-6.364-6.364l-1.253-1.253a4.5 4.5 0 01-4.24-1.844" /></svg></div>
+                         <div class="tool-icon"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.59 14.37a6 6 0 01-5.84 7.38v-4.82m5.84-2.56v4.82a6 6 0 01-1.844 4.24l-1.253 1.253a4.5 4.5 0 01-6.364-6.364l1.253-1.253a4.5 4.5 0 014.24-1.844m-2.56-5.84v4.82a6 6 0 017.38 5.84m-12.24 0H4.5a4.5 4.5 0 01-4.5-4.5v-1.253a4.5 4.5 0 011.844-4.24l1.253-1.253a4.5 4.5 0 016.364 0l1.253 1.253a4.5 4.5 0 011.844 4.24v1.253a4.5 4.5 0 01-4.5 4.5h-1.253m-2.56-5.84v-4.82a6 6 0 01-5.84-7.38m12.24 0H19.5a4.5 4.5 0 014.5 4.5v1.253a4.5 4.5 0 01-1.844 4.24l-1.253 1.253a4.5 4.5 0 01-6.364-6.364l-1.253-1.253a4.5 4.5 0 01-4.24-1.844" /></svg></div>
                          <div class="tool-info"><h3>Odyssey</h3><p>Strategy & Planning</p></div>
                      </div>
                      <p class="description">Craft detailed project plans, marketing campaigns, and presentation slides automatically.</p>
@@ -271,6 +277,43 @@
                 </div>
             </div>
         </section>
+
+        <!-- *** NEW FAQ SECTION *** -->
+        <section id="faq">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Frequently Asked Questions</h2>
+                    <p>Have questions? We've got answers. If you can't find what you're looking for, feel free to reach out to our support team.</p>
+                </div>
+                <div class="faq-container">
+                    <div class="faq-item">
+                        <button class="faq-question">How do I get access to these AI tools?</button>
+                        <div class="faq-answer">
+                            <p>All full-time employees are automatically granted access to the InnovateSphere toolkit. Simply click 'Launch App' on any of the tools above to get started. If you encounter any issues, please contact IT support.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question">Is the data I use in these tools secure and confidential?</button>
+                        <div class="faq-answer">
+                            <p>Absolutely. InnovateSphere operates on a private, internal instance of these AI models. All data processed is end-to-end encrypted and never leaves our company's secure network. Your work remains completely confidential.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question">Can I use the images or content I generate for external projects?</button>
+                        <div class="faq-answer">
+                            <p>Yes, all assets generated through our official toolkit are pre-cleared for both internal and external business use, including marketing materials, presentations, and client projects. You own the copyright to the specific outputs you generate.</p>
+                        </div>
+                    </div>
+                     <div class="faq-item">
+                        <button class="faq-question">Who should I contact if I have an idea for a new AI tool?</button>
+                        <div class="faq-answer">
+                            <p>We'd love to hear it! Please submit your ideas to the Internal Innovation Team via the feedback form available on each tool's detail page. We are constantly evaluating new applications to add to the toolkit.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
     </main>
 
     <footer>
@@ -385,6 +428,29 @@
                 e.preventDefault();
                 alert(`Thank you for your feedback on ${currentAppTitle}!`);
                 closeModal(feedbackModal);
+            });
+
+            // --- NEW FAQ Accordion Logic ---
+            const faqItems = document.querySelectorAll('.faq-item');
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+                const answer = item.querySelector('.faq-answer');
+
+                question.addEventListener('click', () => {
+                    const isActive = item.classList.contains('active');
+                    
+                    // Close all other items for a cleaner accordion experience
+                    faqItems.forEach(i => {
+                        i.classList.remove('active');
+                        i.querySelector('.faq-answer').style.maxHeight = null;
+                    });
+
+                    // If the clicked item wasn't already active, open it
+                    if (!isActive) {
+                        item.classList.add('active');
+                        answer.style.maxHeight = answer.scrollHeight + 'px';
+                    }
+                });
             });
         });
     </script>
