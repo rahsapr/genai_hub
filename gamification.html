@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Progress - InnovateSphere</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Copied all styles from index.html for consistency */
+        :root {
+            --primary-gradient: linear-gradient(90deg, #6a11cb 0%, #2575fc 100%);
+            --primary-color-start: #6a11cb;
+            --primary-color-end: #2575fc;
+            --text-primary: #1a202c;
+            --text-secondary: #5a6474;
+            --background-color: #f7faff;
+            --card-bg: #ffffff;
+            --border-color: #e2e8f0;
+            --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.04);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--background-color); color: var(--text-primary); line-height: 1.6; }
+        .container { max-width: 1280px; margin: 0 auto; padding: 0 2rem; }
+        .btn { display: inline-block; background: var(--primary-gradient); color: #fff; padding: 0.8rem 2rem; border: none; border-radius: 50px; text-decoration: none; font-weight: 600; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.1); cursor: pointer; }
+        .btn:hover { transform: translateY(-3px); box-shadow: 0 7px 20px rgba(106, 17, 203, 0.25); }
+        
+        /* HEADER (Same as index.html) */
+        .main-header { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border-color); padding: 1rem 0; position: sticky; top: 0; z-index: 100; }
+        .main-header .container { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.5rem; font-weight: 700; color: var(--text-primary); text-decoration: none; }
+        .logo span { background: var(--primary-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .header-right { display: flex; align-items: center; gap: 1.5rem; }
+        .task-notification { position: relative; color: var(--text-secondary); font-size: 1.5rem; text-decoration: none; transition: color 0.3s; }
+        .task-notification:hover { color: var(--primary-color-end); }
+        .task-notification .dot { width: 8px; height: 8px; background-color: var(--primary-color-end); border-radius: 50%; position: absolute; top: 2px; right: 0; border: 1px solid #fff; }
+        .profile-link { text-decoration: none; color: inherit; }
+        .user-profile { display: flex; align-items: center; gap: 15px; border-radius: 50px; padding: 5px; transition: background-color 0.3s; }
+        .profile-link:hover .user-profile { background-color: #f0f4ff; }
+        .user-profile img { width: 45px; height: 45px; border-radius: 50%; object-fit: cover; border: 2px solid var(--primary-color-start); }
+        .user-info .username { font-weight: 600; display: block; }
+        .user-info .level { font-size: 0.85rem; color: var(--text-secondary); }
+        .progress-bar { width: 100px; height: 5px; background-color: var(--border-color); border-radius: 5px; overflow: hidden; margin-top: 4px; }
+        .progress { width: 60%; height: 100%; background: var(--primary-gradient); }
+
+        /* Page Specific Styles */
+        .page-header { text-align: center; padding: 4rem 0; }
+        .page-header h1 { font-size: 3rem; margin-bottom: 0.5rem; }
+        .page-header p { font-size: 1.25rem; color: var(--text-secondary); }
+        .page-header .score-display { font-size: 1.5rem; font-weight: 700; margin-top: 1.5rem; }
+        .page-header .score-display span { background: var(--primary-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 2.5rem; }
+
+        .gamification-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 2rem; align-items: flex-start; }
+        .gamification-card { background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 2rem; box-shadow: var(--card-shadow); }
+        .gamification-card h2 { font-size: 1.5rem; margin-bottom: 1.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; }
+        
+        /* Mission List */
+        .mission-list { list-style: none; }
+        .mission-list li { display: flex; align-items: center; padding: 1rem; border-radius: 8px; transition: background-color 0.2s; margin-bottom: 1rem; border: 1px solid var(--border-color); }
+        .mission-list li.completed { background-color: #f0fdf4; border-color: #16a34a; }
+        .mission-list li.completed .task-name { text-decoration: line-through; color: var(--text-secondary); }
+        .mission-list input[type="checkbox"] { width: 20px; height: 20px; margin-right: 1rem; cursor: pointer; accent-color: var(--primary-color-start); }
+        .task-points { margin-left: auto; font-weight: 600; color: #16a34a; background: #dcfce7; padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.9rem; }
+
+        /* Leaderboard */
+        .leaderboard-list { list-style: none; }
+        .leaderboard-list li { display: flex; align-items: center; padding: 0.75rem 0; border-bottom: 1px solid var(--border-color); }
+        .leaderboard-list li:last-child { border-bottom: none; }
+        .leaderboard-list .rank { font-size: 1.1rem; font-weight: 700; color: var(--text-secondary); width: 40px; }
+        .leaderboard-list img { width: 40px; height: 40px; border-radius: 50%; margin: 0 1rem; }
+        .leaderboard-list .name { font-weight: 500; }
+        .leaderboard-list .points { margin-left: auto; font-weight: 600; }
+        
+        .your-rank { background-color: #eff6ff; border: 1px solid #60a5fa; border-radius: 8px; margin-top: 1.5rem; }
+        .your-rank li { border: none !important; padding: 0.75rem 1rem; }
+
+        /* Toast Notification */
+        .toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: var(--primary-gradient); color: white; padding: 1rem 2rem; border-radius: 50px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); z-index: 2000; opacity: 0; transition: opacity 0.4s, bottom 0.4s; }
+        .toast.show { opacity: 1; bottom: 30px; }
+
+        footer { text-align: center; padding: 3rem 0; margin-top: 4rem; border-top: 1px solid var(--border-color); color: var(--text-secondary); }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <div class="container">
+            <a href="index.html" class="logo">Innovate<span>Sphere</span></a>
+            <div class="header-right">
+                <a href="gamification.html" class="task-notification" title="Today's Missions">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                    <span class="dot"></span>
+                </a>
+                <a href="gamification.html" class="profile-link">
+                    <div class="user-profile">
+                        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=100&q=80" alt="User Avatar">
+                        <div class="user-info">
+                            <span class="username">Sarah Chen</span>
+                            <span class="level">Level 8 Innovator</span>
+                            <div class="progress-bar"><div class="progress"></div></div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="page-header">
+            <div class="container">
+                <h1>Your Progress Dashboard</h1>
+                <p>Complete missions, earn points, and climb the leaderboard!</p>
+                <div class="score-display">Total Innovation Points: <span id="total-score">1,250</span></div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="gamification-grid">
+                <div class="gamification-card">
+                    <h2>Today's Missions</h2>
+                    <ul class="mission-list">
+                        <li data-points="10"><input type="checkbox" class="mission-checkbox"><span class="task-name">Generate a marketing image with Aurora</span><span class="task-points">+10 IP</span></li>
+                        <li data-points="5"><input type="checkbox" class="mission-checkbox"><span class="task-name">Draft an email to a client using Cogito</span><span class="task-points">+5 IP</span></li>
+                        <li data-points="20"><input type="checkbox" class="mission-checkbox"><span class="task-name">Analyze a dataset with Oracle</span><span class="task-points">+20 IP</span></li>
+                        <li data-points="15"><input type="checkbox" class="mission-checkbox"><span class="task-name">Create a 15s soundtrack with Harmony</span><span class="task-points">+15 IP</span></li>
+                    </ul>
+                </div>
+                <div class="gamification-card">
+                    <h2>Weekly Leaderboard</h2>
+                    <ol class="leaderboard-list">
+                        <li><span class="rank">1.</span><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=80&q=80" alt="Avatar"><span class="name">David Lee</span><span class="points">1,420 IP</span></li>
+                        <li><span class="rank">2.</span><img src="https://images.unsplash.com/photo-1542909168-82c3e7fdca5c?auto=format&fit=crop&w=80&q=80" alt="Avatar"><span class="name">Maria Garcia</span><span class="points">1,380 IP</span></li>
+                        <li><span class="rank">3.</span><img src="https://images.unsplash.com/photo-1530268729831-4b0b9e170218?auto=format&fit=crop&w=80&q=80" alt="Avatar"><span class="name">Mark Rivera</span><span class="points">1,315 IP</span></li>
+                        <li><span class="rank">4.</span><img src="https://images.unsplash.com/photo-1544725176-7c40e5a71c5e?auto=format&fit=crop&w=80&q=80" alt="Avatar"><span class="name">Chloe Kim</span><span class="points">1,290 IP</span></li>
+                        <li><span class="rank">5.</span><img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=80&q=80" alt="Avatar"><span class="name">James Smith</span><span class="points">1,275 IP</span></li>
+                    </ol>
+                    <ol class="leaderboard-list your-rank">
+                        <li><span class="rank">12.</span><img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=80&q=80" alt="Avatar"><span class="name">You (Sarah Chen)</span><span id="your-points" class="points">1,250 IP</span></li>
+                    </ol>
+                    <p style="text-align: center; color: var(--text-secondary); font-size: 0.9rem; margin-top: 1rem;">You are in the top 500 innovators!</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 InnovateSphere. A project by our Internal Innovation Team.</p>
+    </footer>
+    
+    <div id="toast" class="toast"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const missionCheckboxes = document.querySelectorAll('.mission-checkbox');
+            const totalScoreEl = document.getElementById('total-score');
+            const yourPointsEl = document.getElementById('your-points');
+
+            function showToast(message) {
+                const toast = document.getElementById('toast');
+                toast.textContent = message;
+                toast.classList.add('show');
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 2500);
+            }
+
+            function updateScore(points) {
+                let currentScore = parseInt(totalScoreEl.textContent.replace(/,/g, ''));
+                let newScore = currentScore + points;
+                
+                // Format with commas
+                totalScoreEl.textContent = newScore.toLocaleString();
+                yourPointsEl.textContent = newScore.toLocaleString() + ' IP';
+            }
+
+            missionCheckboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', (e) => {
+                    const missionItem = e.target.closest('li');
+                    const points = parseInt(missionItem.dataset.points, 10);
+
+                    if (e.target.checked) {
+                        missionItem.classList.add('completed');
+                        updateScore(points);
+                        showToast(`+${points} IP! Great job!`);
+                    } else {
+                        missionItem.classList.remove('completed');
+                        updateScore(-points);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
